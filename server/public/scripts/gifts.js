@@ -1,4 +1,4 @@
-const renderGifts = async () => {
+async function renderGifts() {
   // Fetch gift data from the /gifts endpoint
   const response = await fetch('/gifts');
   const data = await response.json();
@@ -62,45 +62,65 @@ const renderGifts = async () => {
 // Extract the portion of the URL after the /
 const requestedURL = window.location.pathname.split('/')[1];
 
+// Get the last part of the URL after the last '/'
 const requestedUrl = window.location.href.split('/').pop();
 
-if (requestedUrl) {
+// Check if we're on the individual gift page
+if (document.getElementById('gift-content')) {
+  // If on the individual gift page, render the single gift
+  renderGift();
+} else if (requestedUrl && requestedURL === 'gifts') {
+  // If there is something after /gifts/, redirect to the 404 page for invalid URLs
   window.location.href = '../404.html';
 } else {
+  // If on the home page, render the gifts list
   renderGifts();
 }
 
-// Call the function to render a single gift when the script loads
-if (document.getElementById('gift-content')) {
-  renderGift();
-}
+// // Call the function to render a single gift when the script loads
+// if (document.getElementById('gift-content')) {
+//   renderGift();
+// }
 
-const renderGift = async () => {
+async function renderGift() {
+    // Get the requested gift ID from the URL (last part after '/')
     const requestedID = parseInt(window.location.href.split('/').pop())
+
+    // Fetch all gift data from the /gifts endpoint
     const response = await fetch('/gifts')
     const data = await response.json()
 
+    // Get the main element where gift details will be displayed
     const giftContent = document.getElementById('gift-content')
 
     let gift
 
+    // Find the gift object that matches the requested ID
     gift = data.find(gift => gift.id === requestedID)
 
+    // If the gift exists, display its details
     if (gift) {
+        // Set the image source
         document.getElementById('image').src = gift.image
+        // Set the gift name
         document.getElementById('name').textContent = gift.name
+        // Set the submitted by field
         document.getElementById('submittedBy').textContent = 'Submitted by: ' + gift.submittedBy
+        // Set the price point
         document.getElementById('pricePoint').textContent = 'Price: ' + gift.pricePoint
+        // Set the audience field
         document.getElementById('audience').textContent = 'Great For: ' + gift.audience
+        // Set the description
         document.getElementById('description').textContent = gift.description
+        // Set the submitted on field
         document.getElementById('submittedOn').textContent = 'Submitted on: ' + gift.submittedOn;
+        // Update the page title to include the gift name
         document.title = `UnEarthed - ${gift.name}`
-      
     }
+    // If no gift is found, show a message
     else {
         const message = document.createElement('h2')
         message.textContent = 'No Gifts Available 😞'
         giftContent.appendChild(message)
-      
     }
 }

@@ -1,13 +1,30 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
+    <!-- Page title and resource links -->
     <title>Gift Details</title>
     <link rel="stylesheet" href="../style.css">
     <script defer src="/scripts/header.js"></script>
-    <script defer src="/scripts/gift.js"></script>
+    <script defer src="/scripts/gifts.js"></script>
   </head>
   <body>
+    <!-- Header for site navigation -->
     <header></header>
-    <main id="gift-content" class="gift-info"></main>
+    <!-- Main section for displaying gift details -->
+    <main id="gift-content" class="gift-info">
+      <!-- Container for the gift image -->
+      <div class="image-container">
+        <img id="image" src="" alt="Gift Image">
+      </div>
+      <!-- Container for the gift details -->
+      <div class="gift-details">
+        <h2 id="name"></h2> <!-- Gift name -->
+        <p id="submittedBy"></p> <!-- Who submitted the gift -->
+        <p id="submittedOn"></p> <!-- When the gift was submitted -->
+        <p id="pricePoint"></p> <!-- Price point of the gift -->
+        <p id="audience"></p> <!-- Intended audience -->
+        <p id="description"></p> <!-- Gift description -->
+      </div>
+    </main>
   </body>
 </html>
