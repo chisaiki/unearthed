@@ -7,8 +7,11 @@ import path from 'path'
 // Import a utility function to convert a file URL to a file system path
 import { fileURLToPath } from 'url'
 
-// Import the gift data array from the data file
-import giftData from '../data/gifts.js'
+// // Import the gift data array from the data file but we dont need it since we're using a db now
+// import giftData from '../data/gifts.js'
+
+import GiftsController from '../controllers/gifts.js'
+
 
 // Get the absolute path of the current file (ES modules don't have __filename by default)
 const __filename = fileURLToPath(import.meta.url)
@@ -20,9 +23,7 @@ const router = express.Router()
 
 //Status 200 is an HTTP status code that means "OK." 
 //It indicates that a request was successful and the server is returning the requested data.
-router.get('/', (req, res) => {
-    res.status(200).json(giftData);
-});
+router.get('/', GiftsController.getGifts);
 
 router.get('/:giftId', (req, res) => {
     res.status(200).sendFile(path.resolve(__dirname, '../public/gift.html'));
